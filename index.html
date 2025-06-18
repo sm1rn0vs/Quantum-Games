@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Games - Создаём будущее игровой индустрии</title>
+    <meta name="description" content="Quantum Games - независимый разработчик инновационных игр для PC и консолей. Погрузитесь в наши уникальные игровые вселенные!">
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --accent: #4776e6;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --success: #4cc9f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Основные стили */
+        header {
+            background-color: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(110, 72, 170, 0.3);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a:hover {
+            color: var(--success);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://example.com/game-particles.png') no-repeat;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #fff, var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(110, 72, 170, 0.5);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(110, 72, 170, 0.7);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--success);
+            color: var(--success);
+            box-shadow: none;
+            margin-left: 20px;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(76, 201, 240, 0.1);
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+            font-size: 48px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+        
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .game-card {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            border: 1px solid rgba(110, 72, 170, 0.3);
+            position: relative;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(110, 72, 170, 0.4);
+            border-color: rgba(110, 72, 170, 0.6);
+        }
+        
+        .game-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .game-media {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .game-card:hover .game-media img {
+            transform: scale(1.1);
+        }
+        
+        .game-media::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(transparent, rgba(26, 26, 46, 0.8));
+            z-index: 1;
+        }
+        
+        .game-info {
+            padding: 25px;
+            position: relative;
+        }
+        
+        .game-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .game-genre {
+            display: inline-block;
+            background: rgba(110, 72, 170, 0.2);
+            color: var(--success);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .game-desc {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .game-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .game-feature {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+        }
+        
+        .game-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(110, 72, 170, 0.3);
+        }
+        
+        .game-price {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .game-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            border: 1px solid rgba(110, 72, 170, 0.5);
+        }
+        
+        .game-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .about {
+            background: linear-gradient(135deg, #16213e 0%, var(--dark) 100%);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .stat-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 18px;
+        }
+        
+        .about-media {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-img {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .team {
+            text-align: center;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .team-card {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            border: 1px solid rgba(110, 72, 170, 0.3);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(110, 72, 170, 0.4);
+            border-color: rgba(110, 72, 170, 0.6);
+        }
+        
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(110, 72, 170, 0.5);
+        }
+        
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-name {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: white;
+        }
+        
+        .team-position {
+            color: var(--success);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .team-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .team-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .contact {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+        }
+        
+        .contact-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(26, 26, 46, 0.7);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(110, 72, 170, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: white;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(110, 72, 170, 0.5);
+            border-radius: 10px;
+            font-size: 16px;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(71, 118, 230, 0.3);
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        footer {
+            background: #0f0f1a;
+            padding: 70px 0 30px;
+            border-top: 1px solid rgba(110, 72, 170, 0.3);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+        
+        .footer-column p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a:hover {
+            color: var(--success);
+        }
+        
+        .footer-links a::before {
+            content: '→';
+            margin-right: 10px;
+            color: var(--primary);
+            transition: margin 0.3s;
+        }
+        
+        .footer-links a:hover::before {
+            margin-right: 15px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 54px;
+            }
+            
+            .section-title {
+                font-size: 42px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-media {
+                margin-top: 50px;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            .section {
+                padding: 80px 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 10px 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .btn-group {
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 700px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+            
+            .game-card {
+                grid-column: 1 / -1;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="quantum-logo.png" alt="Quantum Games">
+                    Quantum Games
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#games">Игры</a></li>
+                        <li><a href="#about">О студии</a></li>
+                        <li><a href="#team">Команда</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="#careers">Карьера</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Создаём будущее игровой индустрии</h1>
+                <p>Quantum Games - независимая студия разработки, создающая инновационные игровые проекты с 2015 года. Наши игры - это уникальные миры, захватывающие истории и передовые технологии.</p>
+                <div class="btn-group">
+                    <a href="#games" class="btn">Наши игры</a>
+                    <a href="#careers" class="btn btn-outline">Присоединиться</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="games" class="section">
+        <div class="container">
+            <h2 class="section-title">Наши игры</h2>
+            <div class="games">
+                <!-- Игра 1 -->
+                <div class="game-card">
+                    <div class="game-badge">Новинка</div>
+                    <div class="game-media">
+                        <img src="game1.jpg" alt="Nexus Revolution">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Nexus Revolution</h3>
+                        <span class="game-genre">Экшен/RPG</span>
+                        <p class="game-desc">Откройте для себя революционную систему боя и глубокий сюжет в мире, где магия и технологии слились воедино.</p>
+                        <div class="game-features">
+                            <span class="game-feature">Открытый мир</span>
+                            <span class="game-feature">Кооператив</span>
+                            <span class="game-feature">Рейтинги</span>
+                        </div>
+                        <div class="game-footer">
+                            <span class="game-price">$39.99</span>
+                            <a href="#" class="game-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Игра 2 -->
+                <div class="game-card">
+                    <div class="game-media">
+                        <img src="game2.jpg" alt="Stellar Nomad">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Stellar Nomad</h3>
+                        <span class="game-genre">Космический симулятор</span>
+                        <p class="game-desc">Исследуйте бескрайние просторы галактики, торгуйте, сражайтесь и создайте свою космическую империю.</p>
+                        <div class="game-features">
+                            <span class="game-feature">Песочница</span>
+                            <span class="game-feature">Мультиплеер</span>
+                            <span class="game-feature">Модификации</span>
+                        </div>
+                        <div class="game-footer">
+                            <span class="game-price">$29.99</span>
+                            <a href="#" class="game-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Игра 3 -->
+                <div class="game-card">
+                    <div class="game-badge">Ранний доступ</div>
+                    <div class="game-media">
+                        <img src="game3.jpg" alt="Chrono Paradox">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Chrono Paradox</h3>
+                        <span class="game-genre">Головоломка/Приключение</span>
+                        <p class="game-desc">Разгадайте тайны времени в этой уникальной головоломке, где ваши решения меняют прошлое и будущее.</p>
+                        <div class="game-features">
+                            <span class="game-feature">Временные механики</span>
+                            <span class="game-feature">Нелинейный сюжет</span>
+                            <span class="game-feature">VR поддержка</span>
+                        </div>
+                        <div class="game-footer">
+                            <span class="game-price">$24.99</span>
+                            <a href="#" class="game-btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>О нашей студии</h3>
+                    <p>Quantum Games была основана в 2015 году группой энтузиастов с богатым опытом в игровой индустрии. Наша миссия - создавать инновационные игровые проекты, которые расширяют границы возможного.</p>
+                    <p>Мы объединяем креативность, передовые технологии и страсть к играм, чтобы создавать уникальные впечатления для игроков по всему миру.</p>
+                    <p>Наш подход к разработке основан на agile-методологиях, что позволяет нам оставаться гибкими и быстро реагировать на изменения в игровой индустрии.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">7+</div>
+                            <div class="stat-text">Лет опыта</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-text">Выпущенных проектов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-text">Профессионалов в команде</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5M+</div>
+                            <div class="stat-text">Игроков по всему миру</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-media">
+                    <div class="about-img">
+                        <img src="studio.jpg" alt="Quantum Games Studio">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="team" class="section team">
+        <div class="container">
+            <h2 class="section-title">Наша команда</h2>
+            <div class="team-grid">
+                <!-- Участник 1 -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="team1.jpg" alt="Алексей Воронин">
+                    </div>
+                    <h3 class="team-name">Михаил Смирнов</h3>
+                    <div class="team-position">CEO & Основатель</div>
+                    <p>15 лет опыта в игровой индустрии. Бывший технический директор в крупной игровой студии.</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">tw</a>
+                        <a href="#">git</a>
+                    </div>
+                </div>
+                
+                <!-- Участник 2 -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="team2.jpg" alt="Мария Соколова">
+                    </div>
+                    <h3 class="team-name">Мария Соколова</h3>
+                    <div class="team-position">Главный художник</div>
+                    <p>Специалист по концепт-арту и визуальному стилю. Работала над 10+ AAA проектами.</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">art</a>
+                        <a href="#">tw</a>
+                    </div>
+                </div>
+                
+                <!-- Участник 3 -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="team3.jpg" alt="Дмитрий Петров">
+                    </div>
+                    <h3 class="team-name">Дмитрий Петров</h3>
+                    <div class="team-position">Lead Developer</div>
+                    <p>Эксперт в области игровых движков и физических симуляций. Разработал 3 патентованные технологии.</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">git</a>
+                        <a href="#">web</a>
+                    </div>
+                </div>
+                
+                <!-- Участник 4 -->
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="team4.jpg" alt="Елена Кузнецова">
+                    </div>
+                    <h3 class="team-name">Елена Кузнецова</h3>
+                    <div class="team-position">Гейм-дизайнер</div>
+                    <p>Специалист по нарративному дизайну и игровым механикам. Автор 5 успешных игровых вселенных.</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">tw</a>
+                        <a href="#">web</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Тема</label>
+                        <select id="subject">
+                            <option value="support">Техническая поддержка</option>
+                            <option value="business">Бизнес-предложения</option>
+                            <option value="press">Пресс-запросы</option>
+                            <option value="career">Карьера в Quantum</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    
+                    <div class="form-submit">
+                        <button type="submit" class="btn">Отправить сообщение</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Quantum Games</h3>
+                    <p>Инновационная студия разработки игр, создающая уникальные игровые впечатления с 2015 года.</p>
+                    <div class="footer-social">
+                        <a href="#">fb</a>
+                        <a href="#">tw</a>
+                        <a href="#">in</a>
+                        <a href="#">yt</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Игры</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Nexus Revolution</a></li>
+                        <li><a href="#">Stellar Nomad</a></li>
+                        <li><a href="#">Chrono Paradox</a></li>
+                        <li><a href="#">Архив проектов</a></li>
+                        <li><a href="#">Будущие релизы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Компания</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Команда</a></li>
+                        <li><a href="#">Карьера</a></li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Поддержка</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Форум</a></li>
+                        <li><a href="#">Техподдержка</a></li>
+                        <li><a href="#">Сообщить о баге</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Quantum Games. Все права защищены. Все торговые марки являются собственностью их владельцев.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
